@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Add new Hero</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="title">
+        Hero Form
+    </div>
+    <form action="#" th:action="@{addhero}" method="post" th:object="${hero}">
+        <div class="field">
+            <input th:field="*{name}" type="text" required>
+            <label>Name</label>
+        </div>
+        <div class="field">
+            <input th:field="*{health}" type="text" required>
+            <label>Health</label>
+        </div>
+        <div class="field">
+            <input th:field="*{move}" type="text" required>
+            <label>Move</label>
+        </div>
+        <div class="field">
+            <input th:field="*{ability}" type="text" required>
+            <label>Ability</label>
+        </div>
+        <div class="field">
+            <input th:field="*{attack}" type="text" required>
+            <label>Attack</label>
+        </div>
+        <div class="field">
+            <input th:field="*{sidekickName}" type="text">
+            <label>Sidekick</label>
+        </div>
+        <div class="field">
+            <input th:field="*{numberOfSidekicks}" type="number">
+            <label>Number of Sidekicks</label>
+        </div>
+        <div class="field">
+            <input th:field="*{setName}" type="text">
+            <label>Set</label>
+        </div>
+        <div class="field">
+            <input type="submit" value="Create hero">
+        </div>
+    </form>
+</div>
+</body>
+</html>
