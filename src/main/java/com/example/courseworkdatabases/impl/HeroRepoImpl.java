@@ -23,31 +23,6 @@ public class HeroRepoImpl implements HeroService {
         return heroRepo.findByName(name);
     }
 
-
-    @Override
-    public List<Hero> findAllByHealth(short health) {
-        return heroRepo.findAll()
-                .stream()
-                .filter((hero -> hero.getHealth() == health))
-                .toList();
-    }
-
-    @Override
-    public Optional<List<Hero>> findAllByMove(short move) {
-        return Optional.of(heroRepo.findAll()
-                .stream()
-                .filter((hero -> hero.getMove() == move))
-                .toList());
-    }
-
-    @Override
-    public Optional<List<Hero>> findAllByAttack(String attack) {
-        return Optional.of(heroRepo.findAll()
-                .stream()
-                .filter((hero -> Objects.equals(hero.getAttack(), attack)))
-                .toList());
-    }
-
     @Override
     public List<Hero> findAllHeroes() {
         return heroRepo.findAll();
@@ -71,5 +46,60 @@ public class HeroRepoImpl implements HeroService {
     @Transactional
     public void deleteHeroByName(String name) {
         heroRepo.deleteByName(name);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereHealthGreaterThanValue(short value) {
+        return heroRepo.findHeroByHealthGreaterThan(value);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereHealthLessThanValue(short value) {
+        return heroRepo.findHeroByHealthLessThan(value);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereHealthEqualsValue(short value) {
+        return heroRepo.findHeroByHealthEquals(value);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesByAttack(String attack) {
+        return heroRepo.findHeroByAttack(attack);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereMoveGreaterThanValue(short move) {
+        return heroRepo.findHeroByMoveGreaterThan(move);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereMoveLessThanValue(short move) {
+        return heroRepo.findHeroByMoveLessThan(move);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereMoveEqualsValue(short move) {
+        return heroRepo.findHeroByMoveEquals(move);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short numberOfSidekicks) {
+        return heroRepo.findHeroByNumberOfSidekicksGreaterThan(numberOfSidekicks);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short numberOfSidekicks) {
+        return heroRepo.findHeroByNumberOfSidekicksLessThan(numberOfSidekicks);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short numberOfSidekicks) {
+        return heroRepo.findHeroByNumberOfSidekicksEquals(numberOfSidekicks);
+    }
+
+    @Override
+    public List<Hero> findAllHeroesBySetName(String setName) {
+        return heroRepo.findHeroBySetName(setName);
     }
 }

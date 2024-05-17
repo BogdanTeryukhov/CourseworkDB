@@ -28,6 +28,61 @@ public class HeroController {
         return heroMapViewRepository.findAll();
     }
 
+    @GetMapping("/hero/health/greater/{health}")
+    public List<Hero> heroesHealthGreaterThan(@PathVariable short health){
+        return heroService.findAllHeroesWhereHealthGreaterThanValue(health);
+    }
+
+    @GetMapping("/hero/health/less/{health}")
+    public List<Hero> heroesHealthLessThan(@PathVariable short health){
+        return heroService.findAllHeroesWhereHealthLessThanValue(health);
+    }
+
+    @GetMapping("/hero/health/equals/{health}")
+    public List<Hero> heroesHealthEquals(@PathVariable short health){
+        return heroService.findAllHeroesWhereHealthEqualsValue(health);
+    }
+
+    @GetMapping("/hero/attack/equals/{attack}")
+    public List<Hero> heroesAttackEquals(@PathVariable String attack){
+        return heroService.findAllHeroesByAttack(attack);
+    }
+
+    @GetMapping("/hero/move/greater/{move}")
+    public List<Hero> heroesMoveGreaterThan(@PathVariable short move){
+        return heroService.findAllHeroesWhereMoveGreaterThanValue(move);
+    }
+
+    @GetMapping("/hero/move/less/{move}")
+    public List<Hero> heroesMoveLessThan(@PathVariable short move){
+        return heroService.findAllHeroesWhereMoveLessThanValue(move);
+    }
+
+    @GetMapping("/hero/move/equals/{move}")
+    public List<Hero> heroesMoveEquals(@PathVariable short move){
+        return heroService.findAllHeroesWhereMoveEqualsValue(move);
+    }
+
+    @GetMapping("/hero/sidekicks/greater/{numberOfSidekicks}")
+    public List<Hero> heroesSidekicksGreaterThan(@PathVariable short numberOfSidekicks){
+        return heroService.findAllHeroesWhereNumberOfSidekicksGreaterThanValue(numberOfSidekicks);
+    }
+
+    @GetMapping("/hero/sidekicks/less/{numberOfSidekicks}")
+    public List<Hero> heroesSidekicksLessThan(@PathVariable short numberOfSidekicks){
+        return heroService.findAllHeroesWhereNumberOfSidekicksLessThanValue(numberOfSidekicks);
+    }
+
+    @GetMapping("/hero/sidekicks/equals/{numberOfSidekicks}")
+    public List<Hero> heroesSidekicksEquals(@PathVariable short numberOfSidekicks){
+        return heroService.findAllHeroesWhereNumberOfSidekicksEqualsValue(numberOfSidekicks);
+    }
+
+    @GetMapping("/hero/setname/equals/{setName}")
+    public List<Hero> heroesSetNameEquals(@PathVariable String setName){
+        return heroService.findAllHeroesBySetName(setName);
+    }
+
     @PostMapping("/hero/add")
     public String addNewHero(@RequestBody Hero hero){
         hero.setId(heroService.findCorrectHeroId() + 1);

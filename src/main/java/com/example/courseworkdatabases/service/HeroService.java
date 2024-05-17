@@ -14,12 +14,19 @@ import java.util.Optional;
 @Component
 public interface HeroService {
     Optional<Hero> findHeroByName(String name);
-
-    List<Hero> findAllByHealth(short health);
-    Optional<List<Hero>> findAllByMove(short move);
-    Optional<List<Hero>> findAllByAttack(String attack);
     List<Hero> findAllHeroes();
     Long findCorrectHeroId();
     void saveHero(Hero hero);
+    List<Hero> findAllHeroesWhereHealthGreaterThanValue(short value);
+    List<Hero> findAllHeroesWhereHealthLessThanValue(short value);
+    List<Hero> findAllHeroesWhereHealthEqualsValue(short value);
+    List<Hero> findAllHeroesByAttack(String attack);
+    List<Hero> findAllHeroesWhereMoveGreaterThanValue(short move);
+    List<Hero> findAllHeroesWhereMoveLessThanValue(short move);
+    List<Hero> findAllHeroesWhereMoveEqualsValue(short move);
+    List<Hero> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short move);
+    List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move);
+    List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move);
+    List<Hero> findAllHeroesBySetName(String setName);
     void deleteHeroByName(String name);
 }
