@@ -1,0 +1,16 @@
+[
+  {
+    "heroName": "Bigfoot",
+    "cardName": "Larger than life",
+    "cardBoost": 3,
+    "cardNumber": 3,
+    "belong": "Hero"
+  },
+  {
+    "heroName": "Bigfoot",
+    "cardName": "It's Just Your Imagination",
+    "cardBoost": 3,
+    "cardNumber": 2,
+    "belong": "Hero"
+  }
+]
