@@ -1,9 +1,0 @@
-{
-  "name" : "Robin hood",
-  "health" : 13,
-  "move": 2,
-  "ability":"After you attack, you may move your attacking fighter up to 2 spaces.",
-  "attack": "Ranged",
-  "numberOfSidekicks": 4,
-  "setName": "Robin hood VS Bigfoot"
-}

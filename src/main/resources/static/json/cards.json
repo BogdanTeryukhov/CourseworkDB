@@ -1,7 +1,0 @@
-{
-  "name": "Skirmish",
-  "value": 4,
-  "boost": 1,
-  "effect": "After combat: If you won the combat, deal 1 dawizard to each fighter adjacent to Bigfoot.",
-  "isUnique": true
-}
