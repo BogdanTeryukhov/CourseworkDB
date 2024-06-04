@@ -33,5 +33,7 @@ public interface HeroRepo extends JpaRepository<Hero, Long> {
     List<Hero> findHeroByNumberOfSidekicksEquals(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.set_name = ?1", nativeQuery = true)
     List<Hero> findHeroBySetName(String setName);
+
+    boolean existsByName(String name);
     void deleteByName(String name);
 }

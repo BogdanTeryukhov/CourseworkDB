@@ -1,85 +1,44 @@
 package com.example.courseworkdatabases.controller;
 
-import com.example.courseworkdatabases.entity.cards.AttackCard;
-import com.example.courseworkdatabases.entity.cards.DefenseCard;
-import com.example.courseworkdatabases.entity.cards.SchemeCard;
-import com.example.courseworkdatabases.entity.cards.VersatileCard;
-import com.example.courseworkdatabases.service.cards.AttackCardService;
-import com.example.courseworkdatabases.service.cards.DefenseCardService;
-import com.example.courseworkdatabases.service.cards.SchemeCardService;
-import com.example.courseworkdatabases.service.cards.VersatileCardService;
+import com.example.courseworkdatabases.entity.Card;
+import com.example.courseworkdatabases.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 @RestController
+@RequestMapping("/card")
 public class CardController {
     @Autowired
-    private AttackCardService attackCardService;
-
-    @Autowired
-    private DefenseCardService defenseCardService;
-
-    @Autowired
-    private VersatileCardService versatileCardService;
-
-    @Autowired
-    private SchemeCardService schemeCardService;
-
-    public Long maxID(Long...values){
-        return Arrays.stream(values).max(Comparator.naturalOrder()).orElse(1L);
-    }
-
+    private CardService cardService;
     public Long findCorrectId(){
-        return maxID(attackCardService.getMaxAttackCardId(), defenseCardService.getMaxDefenseCardId(),
-                schemeCardService.getMaxSchemeCardId(), versatileCardService.getMaxVersatileCardId()) + 1;
+        return cardService.getMaxCardId() + 1;
     }
 
-    @PostMapping("/card/addAttack")
-    public String addAttackCard(@RequestBody AttackCard attackCard) {
-        attackCard.setId(findCorrectId());
-        attackCardService.saveAttackCard(attackCard);
-        return "Attack card has been added";
-    }
-
-    @PostMapping("/card/addDefense")
-    public String addDefenseCard(@RequestBody DefenseCard defenseCard) {
-        defenseCard.setId(findCorrectId());
-        defenseCardService.saveDefenseCard(defenseCard);
-        return "Defense card has been added";
-    }
-
-    @PostMapping("/card/addVersatile")
-    public String addVersatileCard(@RequestBody VersatileCard versatileCard) {
-        versatileCard.setId(findCorrectId());
-        System.out.println(versatileCard);
-        versatileCardService.saveVersatileCard(versatileCard);
-        return "Versatile card has been added";
-    }
-
-    @PostMapping("/card/addScheme")
-    public String addSchemeCard(@RequestBody SchemeCard schemeCard) {
-        schemeCard.setId(findCorrectId());
-        schemeCardService.saveSchemeCard(schemeCard);
-        return "Scheme card has been added";
-    }
-
-    @DeleteMapping("/card/delete/{name}/{boost}")
-    public String deleteAttackCard(@PathVariable String name, @PathVariable int boost) {
-        if (attackCardService.findAttackCard(name, boost) != null) {
-            attackCardService.deleteAttackCard(name, boost);
+    @PostMapping("/add")
+    public ResponseEntity<String> addCard(@RequestBody Card card) {
+        if (cardService.ifCardExist(card.getName(), card.getBoost())){
+            return new ResponseEntity<>(
+                    "Card is already exists! You can`t make another card with same name and boost value",
+                    HttpStatus.BAD_REQUEST
+            );
         }
-        else if (defenseCardService.findDefenseCard(name, boost) != null) {
-            defenseCardService.deleteDefenseCardById(name, boost);
+        card.setId(findCorrectId());
+        cardService.saveCard(card);
+        cardService.setUniqueWhileAdding(card);
+        return new ResponseEntity<>("Card has been added", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{name}/{boost}")
+    public ResponseEntity<String> deleteCard(@PathVariable String name, @PathVariable short boost) {
+        if (!cardService.ifCardExist(name, boost)){
+            return new ResponseEntity<>(
+                    "Card is not exists!",
+                    HttpStatus.BAD_REQUEST
+            );
         }
-        else if (versatileCardService.findVersatileCard(name, boost) != null) {
-            versatileCardService.deleteVersatileCardByNameAndBoost(name, boost);
-        }
-        else if (schemeCardService.findSchemeCard(name, boost) != null) {
-            schemeCardService.deleteSchemeCardByNameAndBoost(name, boost);
-        }
-        return "Card has been deleted";
+        cardService.deleteCard(name, boost);
+        return new ResponseEntity<>("Card has been deleted", HttpStatus.OK);
     }
 }

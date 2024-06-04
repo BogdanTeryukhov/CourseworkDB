@@ -10,18 +10,19 @@ import java.util.Objects;
 
 
 @RestController
+@RequestMapping("/set")
 public class SetController {
     @Autowired
     private SetService setService;
 
-    @PostMapping("/set/add")
+    @PostMapping("/add")
     public String addSet(@RequestBody Set set) {
         set.setId(setService.getMaxSetId() + 1);
         setService.saveSet(set);
         return "Set has been saved";
     }
 
-    @PutMapping("/set/update/{name}")
+    @PutMapping("/update/{name}")
     public String updateSet(@PathVariable String name, @RequestBody Set set) throws CantChangeIdException {
         Set currentSet = setService.findSet(name).orElseThrow();
         if (!Objects.equals(set.getId(), currentSet.getId())){
@@ -32,7 +33,7 @@ public class SetController {
         return "Set has been updated";
     }
 
-    @DeleteMapping("/set/delete/{name}")
+    @DeleteMapping("/delete/{name}")
     public String deleteSet(@PathVariable String name) {
         setService.deleteSetByName(name);
         return "Set has been deleted";

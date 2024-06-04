@@ -6,91 +6,100 @@ import com.example.courseworkdatabases.repository.reposView.HeroMapViewRepositor
 import com.example.courseworkdatabases.service.HeroService;
 import com.example.courseworkdatabases.entity.view.HeroMapView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/hero")
 public class HeroController {
     @Autowired
     private HeroService heroService;
     @Autowired
     private HeroMapViewRepository heroMapViewRepository;
 
-    @GetMapping("/heroes")
-    public List<Hero> heroAdd(){
+    @GetMapping("/get")
+    public List<Hero> heroes(){
         return heroService.findAllHeroes();
     }
 
-    @GetMapping("/heroMapView")
+    @GetMapping("/map")
     public List<HeroMapView> heroMapsView(){
         return heroMapViewRepository.findAll();
     }
 
-    @GetMapping("/hero/health/greater/{health}")
+    @GetMapping("/health/greater/{health}")
     public List<Hero> heroesHealthGreaterThan(@PathVariable short health){
         return heroService.findAllHeroesWhereHealthGreaterThanValue(health);
     }
 
-    @GetMapping("/hero/health/less/{health}")
+    @GetMapping("/health/less/{health}")
     public List<Hero> heroesHealthLessThan(@PathVariable short health){
         return heroService.findAllHeroesWhereHealthLessThanValue(health);
     }
 
-    @GetMapping("/hero/health/equals/{health}")
+    @GetMapping("/health/equals/{health}")
     public List<Hero> heroesHealthEquals(@PathVariable short health){
         return heroService.findAllHeroesWhereHealthEqualsValue(health);
     }
 
-    @GetMapping("/hero/attack/equals/{attack}")
+    @GetMapping("/attack/equals/{attack}")
     public List<Hero> heroesAttackEquals(@PathVariable String attack){
         return heroService.findAllHeroesByAttack(attack);
     }
 
-    @GetMapping("/hero/move/greater/{move}")
+    @GetMapping("/move/greater/{move}")
     public List<Hero> heroesMoveGreaterThan(@PathVariable short move){
         return heroService.findAllHeroesWhereMoveGreaterThanValue(move);
     }
 
-    @GetMapping("/hero/move/less/{move}")
+    @GetMapping("/move/less/{move}")
     public List<Hero> heroesMoveLessThan(@PathVariable short move){
         return heroService.findAllHeroesWhereMoveLessThanValue(move);
     }
 
-    @GetMapping("/hero/move/equals/{move}")
+    @GetMapping("/move/equals/{move}")
     public List<Hero> heroesMoveEquals(@PathVariable short move){
         return heroService.findAllHeroesWhereMoveEqualsValue(move);
     }
 
-    @GetMapping("/hero/sidekicks/greater/{numberOfSidekicks}")
+    @GetMapping("/sidekicks/greater/{numberOfSidekicks}")
     public List<Hero> heroesSidekicksGreaterThan(@PathVariable short numberOfSidekicks){
         return heroService.findAllHeroesWhereNumberOfSidekicksGreaterThanValue(numberOfSidekicks);
     }
 
-    @GetMapping("/hero/sidekicks/less/{numberOfSidekicks}")
+    @GetMapping("/sidekicks/less/{numberOfSidekicks}")
     public List<Hero> heroesSidekicksLessThan(@PathVariable short numberOfSidekicks){
         return heroService.findAllHeroesWhereNumberOfSidekicksLessThanValue(numberOfSidekicks);
     }
 
-    @GetMapping("/hero/sidekicks/equals/{numberOfSidekicks}")
+    @GetMapping("/sidekicks/equals/{numberOfSidekicks}")
     public List<Hero> heroesSidekicksEquals(@PathVariable short numberOfSidekicks){
         return heroService.findAllHeroesWhereNumberOfSidekicksEqualsValue(numberOfSidekicks);
     }
 
-    @GetMapping("/hero/setname/equals/{setName}")
+    @GetMapping("/setname/equals/{setName}")
     public List<Hero> heroesSetNameEquals(@PathVariable String setName){
         return heroService.findAllHeroesBySetName(setName);
     }
 
-    @PostMapping("/hero/add")
-    public String addNewHero(@RequestBody Hero hero){
+    @PostMapping("/add")
+    public ResponseEntity<String> addNewHero(@RequestBody Hero hero){
+        if (heroService.heroExists(hero.getName())){
+            return new ResponseEntity<>(
+                    "Hero is already exists! You can`t make another hero with same name",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
         hero.setId(heroService.findCorrectHeroId() + 1);
         heroService.saveHero(hero);
-        return "Hero has been saved";
+        return new ResponseEntity<>("Hero has been saved", HttpStatus.OK);
     }
 
-    @PutMapping("/hero/update/{name}")
+    @PutMapping("/update/{name}")
     public String editHero(@PathVariable String name, @RequestBody Hero hero) throws CantChangeIdException {
         Hero currentHero = heroService.findHeroByName(name).orElseThrow();
         if (!Objects.equals(currentHero.getId(), hero.getId())){
@@ -112,9 +121,15 @@ public class HeroController {
         return "Hero has been edited";
     }
 
-    @DeleteMapping("/hero/delete/{name}")
-    public String deleteHero(@PathVariable String name){
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity<String> deleteHero(@PathVariable String name){
+        if (!heroService.heroExists(name)){
+            return new ResponseEntity<>(
+                    "Hero is not exists!",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
         heroService.deleteHeroByName(name);
-        return "Hero has been deleted";
+        return new ResponseEntity<>("Hero has been deleted", HttpStatus.OK);
     }
 }

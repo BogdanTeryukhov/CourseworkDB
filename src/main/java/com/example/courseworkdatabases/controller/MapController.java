@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/map")
 public class MapController {
     @Autowired
     private MapService mapService;
 
-    @PostMapping("/map/add")
+    @PostMapping("/add")
     public String addMap(@RequestBody Map map){
         map.setId(mapService.getMaxMapId() + 1);
         mapService.saveMap(map);
         return "Map has been saved";
     }
 
-    @PutMapping("map/update/{name}")
+    @PutMapping("/update/{name}")
     public String updateMap(@PathVariable String name, @RequestBody Map map) throws CantChangeIdException {
         Map currentMap = mapService.findMap(name).orElseThrow();
         if (!Objects.equals(map.getId(), currentMap.getId())){
@@ -32,7 +33,7 @@ public class MapController {
         return "Map has been updated";
     }
 
-    @DeleteMapping("/map/delete/{name}")
+    @DeleteMapping("/delete/{name}")
     public String deleteMap(@PathVariable String name){
         mapService.deleteMapByName(name);
         return "Map has been deleted";

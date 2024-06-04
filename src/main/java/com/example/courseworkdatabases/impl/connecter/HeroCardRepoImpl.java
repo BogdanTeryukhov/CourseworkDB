@@ -1,9 +1,7 @@
 package com.example.courseworkdatabases.impl.connecter;
 
-import com.example.courseworkdatabases.entity.cards.AttackCard;
 import com.example.courseworkdatabases.entity.connecter.HeroCard;
 import com.example.courseworkdatabases.repository.connecter.HeroCardRepo;
-import com.example.courseworkdatabases.service.HeroService;
 import com.example.courseworkdatabases.service.connecter.HeroCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +27,7 @@ public class HeroCardRepoImpl implements HeroCardService {
     public List<HeroCard> findAllHeroCards() {
         return heroCardRepo.findAll();
     }
+
 
     @Override
     public Long getMaxHeroCardId() {

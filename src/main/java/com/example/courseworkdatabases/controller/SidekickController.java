@@ -12,19 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
+@RequestMapping("/sidekick")
 public class SidekickController {
 
     @Autowired
     private SidekickService sidekickService;
 
-    @PostMapping("/addsidekick")
+    @PostMapping("/add")
     public String sidekick(@RequestBody Sidekick sidekick){
         sidekick.setId(sidekickService.getMaxSidekickId() + 1);
         sidekickService.saveSidekick(sidekick);
         return "Sidekick has been added";
     }
 
-    @PutMapping("/sidekick/update{name}")
+    @PutMapping("/update{name}")
     public String updateSidekick(@PathVariable String name, @RequestBody Sidekick sidekick) throws CantChangeIdException {
         Sidekick currentSidekick = sidekickService.findSidekick(name).orElseThrow();
         if (!Objects.equals(sidekick.getId(), currentSidekick.getId())){
@@ -37,7 +38,7 @@ public class SidekickController {
         return "Sidekick has been updated";
     }
 
-    @DeleteMapping("/sidekick/delete/{name}")
+    @DeleteMapping("/delete/{name}")
     public String addSidekick(@PathVariable String name){
         sidekickService.deleteSidekick(name);
         return "Sidekick has been deleted";

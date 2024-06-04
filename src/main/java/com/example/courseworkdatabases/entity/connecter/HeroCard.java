@@ -27,10 +27,14 @@ public class HeroCard {
     @Column(name = "card_number")
     private short cardNumber;
 
-    public HeroCard(String heroName, String cardName, int cardBoost, short cardNumber) {
+    @Column(name = "belong")
+    private String belong;
+
+    public HeroCard(String heroName, String cardName, int cardBoost, short cardNumber, String belong) {
         this.heroName = heroName;
         this.cardName = cardName;
         this.cardBoost = cardBoost;
         this.cardNumber = cardNumber;
+        this.belong = belong;
     }
 }

@@ -28,5 +28,6 @@ public interface HeroService {
     List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move);
     List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move);
     List<Hero> findAllHeroesBySetName(String setName);
+    boolean heroExists(String name);
     void deleteHeroByName(String name);
 }

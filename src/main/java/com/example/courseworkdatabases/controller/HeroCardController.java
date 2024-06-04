@@ -5,13 +5,15 @@ import com.example.courseworkdatabases.service.connecter.HeroCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/herocard")
+@RestController()
+@RequestMapping("/herocard")
 public class HeroCardController {
     @Autowired
     private HeroCardService heroCardService;
 
     @PostMapping("/connect")
     public String connectHeroAndCard(@RequestBody HeroCard heroCard){
+        System.out.println(heroCard);
         heroCard.setId(heroCardService.getMaxHeroCardId() + 1);
         try {
             heroCardService.saveHeroCard(heroCard);

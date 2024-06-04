@@ -17,7 +17,6 @@ public class HeroRepoImpl implements HeroService {
     @Autowired
     private HeroRepo heroRepo;
 
-
     @Override
     public Optional<Hero> findHeroByName(String name) {
         return heroRepo.findByName(name);
@@ -101,5 +100,10 @@ public class HeroRepoImpl implements HeroService {
     @Override
     public List<Hero> findAllHeroesBySetName(String setName) {
         return heroRepo.findHeroBySetName(setName);
+    }
+
+    @Override
+    public boolean heroExists(String name) {
+        return heroRepo.existsByName(name);
     }
 }

@@ -1,8 +1,6 @@
 package com.example.courseworkdatabases.impl;
 
-import com.example.courseworkdatabases.entity.Hero;
 import com.example.courseworkdatabases.entity.Sidekick;
-import com.example.courseworkdatabases.entity.cards.AttackCard;
 import com.example.courseworkdatabases.repository.SidekickRepo;
 import com.example.courseworkdatabases.service.SidekickService;
 import org.springframework.beans.factory.annotation.Autowired;
