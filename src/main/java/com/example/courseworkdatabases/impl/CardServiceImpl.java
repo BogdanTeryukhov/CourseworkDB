@@ -1,6 +1,8 @@
 package com.example.courseworkdatabases.impl;
 
+import com.example.courseworkdatabases.annotations.TransactionTimeManagement;
 import com.example.courseworkdatabases.entity.Card;
+import com.example.courseworkdatabases.entity.composite.CardID;
 import com.example.courseworkdatabases.entity.connecter.HeroCard;
 import com.example.courseworkdatabases.repository.CardRepo;
 import com.example.courseworkdatabases.repository.connecter.HeroCardRepo;
@@ -22,6 +24,7 @@ public class CardServiceImpl implements CardService {
     private HeroCardRepo heroCardRepo;
 
     @Override
+    @TransactionTimeManagement()
     public void saveCard(Card card) {
         cardRepo.save(card);
     }
@@ -36,10 +39,11 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    @TransactionTimeManagement()
     public void deleteCard(String name, short boost) {
         List<HeroCard> heroCards = heroCardRepo.findAllByCardNameAndCardBoost(name, boost);
         heroCardRepo.deleteAll(heroCards);
-        cardRepo.delete(cardRepo.findCardByNameAndAndBoost(name, boost));
+        cardRepo.delete(cardRepo.findCardByNameAndBoost(name, boost));
     }
 
     @Override
@@ -47,12 +51,4 @@ public class CardServiceImpl implements CardService {
         return cardRepo.existsByNameAndBoost(name, boost);
     }
 
-    @Override
-    public Long getMaxCardId() {
-        return cardRepo.findAll().stream()
-                .map((Card::getId))
-                .mapToLong(Long::longValue)
-                .max()
-                .orElse(0L);
-    }
 }

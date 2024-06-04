@@ -1,5 +1,6 @@
 package com.example.courseworkdatabases.impl.connecter;
 
+import com.example.courseworkdatabases.annotations.TransactionTimeManagement;
 import com.example.courseworkdatabases.entity.connecter.HeroCard;
 import com.example.courseworkdatabases.repository.connecter.HeroCardRepo;
 import com.example.courseworkdatabases.service.connecter.HeroCardService;
@@ -14,11 +15,13 @@ public class HeroCardRepoImpl implements HeroCardService {
     private HeroCardRepo heroCardRepo;
 
     @Override
+    @TransactionTimeManagement()
     public void saveHeroCard(HeroCard heroCard) {
         heroCardRepo.save(heroCard);
     }
 
     @Override
+    @TransactionTimeManagement()
     public void deleteHeroCard(String heroName, String cardName) {
         heroCardRepo.delete(heroCardRepo.findByHeroNameAndCardName(heroName, cardName));
     }
@@ -36,5 +39,10 @@ public class HeroCardRepoImpl implements HeroCardService {
                 .mapToLong(Long::longValue)
                 .max()
                 .orElse(1L);
+    }
+
+    @Override
+    public boolean heroCardExists(String heroName, String cardName) {
+        return heroCardRepo.existsByHeroNameAndAndCardName(heroName, cardName);
     }
 }

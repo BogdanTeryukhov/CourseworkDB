@@ -4,7 +4,7 @@
     "value": 6,
     "boost": 3,
     "uniq": true,
-    "type": "ATTACK"
+    "type": "Attack"
   },
 
   {
@@ -13,7 +13,7 @@
     "boost": 3,
     "effect": "Immediately: Cancel all effects on your opponent's card.",
     "uniq": true,
-    "type": "ATTACK"
+    "type": "Defense"
   },
 
   {
@@ -22,7 +22,7 @@
     "boost": 1,
     "effect": "After combat: Deal 1 damage to each adjacent fighter.",
     "uniq": false,
-    "type": "ATTACK"
+    "type": "Versatile"
   }
 ]
 

@@ -10,8 +10,10 @@ import java.util.Optional;
 public interface MapService {
     void saveMap(Map map);
     void deleteMapByName(String mapName);
-
+    Optional<List<Map>> findAllMapsBySetName(String setName);
     Optional<Map> findMap(String name);
     List<Map> findAllMaps();
-    Long getMaxMapId();
+    boolean mapExists(String name);
+    void deleteMap(String name);
+    void deleteAllMapsBySetName(String setName);
 }

@@ -1,6 +1,7 @@
 package com.example.courseworkdatabases.service;
 
 import com.example.courseworkdatabases.entity.Card;
+import com.example.courseworkdatabases.entity.composite.CardID;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,5 +10,4 @@ public interface CardService {
     void setUniqueWhileAdding(Card card);
     void deleteCard(String name, short boost);
     boolean ifCardExist(String name, short boost);
-    Long getMaxCardId();
 }

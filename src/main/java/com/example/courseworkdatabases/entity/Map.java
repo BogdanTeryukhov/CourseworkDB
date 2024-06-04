@@ -1,9 +1,7 @@
 package com.example.courseworkdatabases.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "map")
 public class Map {
-    @Id
-    private Long id;
 
+    @Id
     @Column(name = "name")
     private String name;
 
@@ -28,9 +25,4 @@ public class Map {
         this.numOfPos = numOfPos;
     }
 
-    public Map(String name, short numOfPos, String setName) {
-        this.name = name;
-        this.numOfPos = numOfPos;
-        this.setName = setName;
-    }
 }

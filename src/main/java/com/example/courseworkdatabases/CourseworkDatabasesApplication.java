@@ -12,5 +12,4 @@ public class CourseworkDatabasesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CourseworkDatabasesApplication.class, args);
 	}
-
 }

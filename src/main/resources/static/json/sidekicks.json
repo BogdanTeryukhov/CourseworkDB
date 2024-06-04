@@ -1,0 +1,25 @@
+[
+  {
+    "name" : "Charlie",
+    "health" : 8,
+    "move": 2,
+    "attack": "Melee",
+    "numberOfSidekicks": 1
+  },
+
+  {
+    "name" : "Dracula`s sisters",
+    "health" : 1,
+    "move": 2,
+    "attack": "Melee",
+    "numberOfSidekicks": 3
+  },
+
+  {
+    "name" : "Outlaws",
+    "health" : 1,
+    "move": 2,
+    "attack": "Melee",
+    "numberOfSidekicks": 4
+  }
+]

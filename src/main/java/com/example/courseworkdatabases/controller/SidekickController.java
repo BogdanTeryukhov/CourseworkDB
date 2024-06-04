@@ -1,14 +1,19 @@
 package com.example.courseworkdatabases.controller;
 
+import com.example.courseworkdatabases.entity.Hero;
 import com.example.courseworkdatabases.entity.Sidekick;
 import com.example.courseworkdatabases.exception.CantChangeIdException;
 import com.example.courseworkdatabases.service.SidekickService;
+import com.example.courseworkdatabases.util.CrudMessagesUtil;
 import org.hibernate.metamodel.mapping.ForeignKeyDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -19,28 +24,76 @@ public class SidekickController {
     private SidekickService sidekickService;
 
     @PostMapping("/add")
-    public String sidekick(@RequestBody Sidekick sidekick){
-        sidekick.setId(sidekickService.getMaxSidekickId() + 1);
+    public ResponseEntity<String> sidekick(@RequestBody Sidekick sidekick){
+        if (sidekickService.sidekickExists(sidekick.getName())){
+            return new ResponseEntity<>(
+                    CrudMessagesUtil.getCreateErrorString(sidekick),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
         sidekickService.saveSidekick(sidekick);
-        return "Sidekick has been added";
+        return new ResponseEntity<>(CrudMessagesUtil.getCreateString(sidekick), HttpStatus.OK);
     }
 
+    @GetMapping("/health/greater/{health}")
+    public List<Sidekick> heroesHealthGreaterThan(@PathVariable short health){
+        return sidekickService.findAllSidekicksWhereHealthGreaterThanValue(health);
+    }
+
+    @GetMapping("/health/less/{health}")
+    public List<Sidekick> heroesHealthLessThan(@PathVariable short health){
+        return sidekickService.findAllSidekicksWhereHealthLessThanValue(health);
+    }
+
+    @GetMapping("/health/equals/{health}")
+    public List<Sidekick> heroesHealthEquals(@PathVariable short health){
+        return sidekickService.findAllSidekicksWhereHealthEqualsValue(health);
+    }
+
+    @GetMapping("/attack/equals/{attack}")
+    public List<Sidekick> heroesAttackEquals(@PathVariable String attack){
+        return sidekickService.findAllSidekicksByAttack(attack);
+    }
+
+    @GetMapping("/move/greater/{move}")
+    public List<Sidekick> heroesMoveGreaterThan(@PathVariable short move){
+        return sidekickService.findAllSidekicksWhereMoveGreaterThanValue(move);
+    }
+
+    @GetMapping("/move/less/{move}")
+    public List<Sidekick> heroesMoveLessThan(@PathVariable short move){
+        return sidekickService.findAllSidekicksWhereMoveLessThanValue(move);
+    }
+
+    @GetMapping("/move/equals/{move}")
+    public List<Sidekick> heroesMoveEquals(@PathVariable short move){
+        return sidekickService.findAllSidekicksWhereMoveEqualsValue(move);
+    }
+
+
     @PutMapping("/update{name}")
-    public String updateSidekick(@PathVariable String name, @RequestBody Sidekick sidekick) throws CantChangeIdException {
+    public ResponseEntity<String> updateSidekick(@PathVariable String name, @RequestBody Sidekick sidekick) throws CantChangeIdException {
         Sidekick currentSidekick = sidekickService.findSidekick(name).orElseThrow();
-        if (!Objects.equals(sidekick.getId(), currentSidekick.getId())){
+        if (!Objects.equals(sidekick.getName(), currentSidekick.getName())){
             throw new CantChangeIdException("You can`t change ID");
         }
-        currentSidekick.setName(sidekick.getName());
+        currentSidekick.setHealth(sidekick.getHealth());
         currentSidekick.setAttack(sidekick.getAttack());
         currentSidekick.setMove(sidekick.getMove());
-        currentSidekick.setAttack(sidekick.getAttack());
-        return "Sidekick has been updated";
+        currentSidekick.setNumberOfSidekicks(sidekick.getNumberOfSidekicks());
+
+        return new ResponseEntity<>(CrudMessagesUtil.getUpdateString(sidekick), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{name}")
-    public String addSidekick(@PathVariable String name){
+    public ResponseEntity<String> addSidekick(@PathVariable String name){
+        if (!sidekickService.sidekickExists(name)){
+            return new ResponseEntity<>(
+                    CrudMessagesUtil.getDeleteErrorString(new Sidekick()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
         sidekickService.deleteSidekick(name);
-        return "Sidekick has been deleted";
+        return new ResponseEntity<>(CrudMessagesUtil.getDeleteString(new Sidekick()), HttpStatus.OK);
     }
 }

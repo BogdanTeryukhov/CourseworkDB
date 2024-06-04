@@ -9,8 +9,7 @@ import java.util.List;
 public interface HeroCardService {
     void saveHeroCard(HeroCard heroCard);
     void deleteHeroCard(String heroName, String cardName);
-
     List<HeroCard> findAllHeroCards();
-
     Long getMaxHeroCardId();
+    boolean heroCardExists(String heroName, String cardName);
 }

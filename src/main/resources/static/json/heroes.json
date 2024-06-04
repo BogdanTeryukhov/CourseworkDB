@@ -1,9 +1,30 @@
-{
-  "name" : "Robin hood",
-  "health" : 13,
-  "move": 2,
-  "ability":"After you attack, you may move your attacking fighter up to 2 spaces.",
-  "attack": "Ranged",
-  "numberOfSidekicks": 4,
-  "setName": "Robin hood VS Bigfoot"
-}
+[
+  {
+    "name" : "Robin hood",
+    "health" : 13,
+    "move": 2,
+    "ability":"After you attack, you may move your attacking fighter up to 2 spaces.",
+    "attack": "Ranged",
+    "sidekickName": "Outlaws",
+    "setName": "Robin hood VS Bigfoot"
+  },
+
+  {
+    "name" : "Bigfoot",
+    "health" : 16,
+    "move": 3,
+    "ability":"At tha end of the turn, if there are no opposing fighters in your zone, you may draw a card",
+    "attack": "Melee",
+    "sidekickName": "Jackalope",
+    "setName": "Robin hood VS Bigfoot"
+  },
+
+  {
+    "name" : "Golden Bat",
+    "health" : 18,
+    "move": 3,
+    "ability":"If you don`t manuever this turn, add +2 when you attack",
+    "attack": "Melee",
+    "setName": "Tales to amaze"
+  }
+]
