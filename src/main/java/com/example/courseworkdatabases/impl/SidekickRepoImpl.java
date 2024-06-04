@@ -1,5 +1,7 @@
 package com.example.courseworkdatabases.impl;
 
+import com.example.courseworkdatabases.annotations.TransactionTimeManagement;
+import com.example.courseworkdatabases.entity.Hero;
 import com.example.courseworkdatabases.entity.Sidekick;
 import com.example.courseworkdatabases.repository.SidekickRepo;
 import com.example.courseworkdatabases.service.SidekickService;
@@ -17,56 +19,64 @@ public class SidekickRepoImpl implements SidekickService {
     private SidekickRepo sidekickRepo;
 
     @Override
-    public Optional<List<Sidekick>> findAllByHealth(short health) {
-        return Optional.of(sidekickRepo.findAll()
-                .stream()
-                .filter((sidekick -> sidekick.getHealth() == health))
-                .toList());
-    }
-
-    @Override
-    public Optional<List<Sidekick>> findAllByMove(short move) {
-        return Optional.of(sidekickRepo.findAll()
-                .stream()
-                .filter((sidekick -> sidekick.getMove() == move))
-                .toList());
-    }
-
-    @Override
     public List<Sidekick> findAllSidekicks() {
         return sidekickRepo.findAll();
     }
 
     @Override
-    public Long getMaxSidekickId() {
-        return sidekickRepo.findAll()
-                .stream()
-                .map((Sidekick::getId))
-                .mapToLong(Long::longValue)
-                .max()
-                .orElse(1L);
-    }
-
-    @Override
-    public Optional<List<Sidekick>> findAllByAttack(String attack) {
-        return Optional.of(sidekickRepo.findAll()
-                .stream()
-                .filter((sidekick -> Objects.equals(sidekick.getAttack(), attack)))
-                .toList());
-    }
-
-    @Override
+    @TransactionTimeManagement()
     public void saveSidekick(Sidekick sidekick) {
         sidekickRepo.save(sidekick);
     }
 
     @Override
+    public List<Sidekick> findAllSidekicksWhereHealthGreaterThanValue(short value) {
+        return sidekickRepo.findSidekickByHealthGreaterThan(value);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksWhereHealthLessThanValue(short value) {
+        return sidekickRepo.findSidekickByHealthLessThan(value);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksWhereHealthEqualsValue(short value) {
+        return sidekickRepo.findSidekickByHealthEquals(value);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksByAttack(String attack) {
+        return sidekickRepo.findSidekickByAttack(attack);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksWhereMoveGreaterThanValue(short move) {
+        return sidekickRepo.findSidekickByMoveGreaterThan(move);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksWhereMoveLessThanValue(short move) {
+        return sidekickRepo.findSidekickByMoveLessThan(move);
+    }
+
+    @Override
+    public List<Sidekick> findAllSidekicksWhereMoveEqualsValue(short move) {
+        return sidekickRepo.findSidekickByMoveEquals(move);
+    }
+
+    @Override
+    @TransactionTimeManagement()
     public void deleteSidekick(String name) {
-        sidekickRepo.delete(sidekickRepo.findByName(name).orElseThrow());
+        sidekickRepo.delete(sidekickRepo.findSidekickByName(name).orElseThrow());
+    }
+
+    @Override
+    public boolean sidekickExists(String name) {
+        return sidekickRepo.existsByName(name);
     }
 
     @Override
     public Optional<Sidekick> findSidekick(String name) {
-        return sidekickRepo.findByName(name);
+        return sidekickRepo.findSidekickByName(name);
     }
 }

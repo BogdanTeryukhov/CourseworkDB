@@ -9,8 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface HeroCardRepo extends JpaRepository<HeroCard, Long> {
-    HeroCard findByHeroName(String heroName);
     HeroCard findByCardName(String cardName);
+    List<HeroCard> findAllByHeroName(String heroName);
+    void deleteAllByHeroName(String heroName);
     HeroCard findByHeroNameAndCardName(String heroName, String cardName);
     List<HeroCard> findAllByCardNameAndCardBoost(String cardName, short cardBoost);
+    boolean existsByHeroNameAndAndCardName(String heroName, String cardName);
 }

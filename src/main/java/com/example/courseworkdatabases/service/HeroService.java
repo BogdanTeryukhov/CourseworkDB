@@ -1,6 +1,7 @@
 package com.example.courseworkdatabases.service;
 
 import com.example.courseworkdatabases.entity.Hero;
+import com.example.courseworkdatabases.exception.CantChangeIdException;
 import com.example.courseworkdatabases.repository.HeroRepo;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.Optional;
 public interface HeroService {
     Optional<Hero> findHeroByName(String name);
     List<Hero> findAllHeroes();
-    Long findCorrectHeroId();
     void saveHero(Hero hero);
     List<Hero> findAllHeroesWhereHealthGreaterThanValue(short value);
     List<Hero> findAllHeroesWhereHealthLessThanValue(short value);
@@ -27,7 +27,9 @@ public interface HeroService {
     List<Hero> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short move);
     List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move);
     List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move);
-    List<Hero> findAllHeroesBySetName(String setName);
+    Optional<List<Hero>> findAllHeroesBySetName(String setName);
     boolean heroExists(String name);
+    void updateHero(String prevName, Hero hero) throws CantChangeIdException;
     void deleteHeroByName(String name);
+    void deleteAllHeroesBySetName(String setName);
 }

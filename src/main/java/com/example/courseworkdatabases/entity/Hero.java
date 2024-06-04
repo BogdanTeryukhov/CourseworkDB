@@ -1,9 +1,7 @@
 package com.example.courseworkdatabases.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "hero")
 public class Hero {
-    @Id
-    private Long id;
 
+    @Id
     @Column(name = "name")
     private String name;
 
@@ -32,9 +29,6 @@ public class Hero {
     @Column(name = "sidekick_name")
     private String sidekickName;
 
-    @Column(name = "number_of_sidekicks")
-    private short numberOfSidekicks;
-
     @Column(name = "set_name")
     private String setName;
 
@@ -45,15 +39,5 @@ public class Hero {
         this.move = move;
         this.ability = ability;
         this.attack = attack;
-    }
-
-    public Hero(String name, short health, short move, String ability, String attack, String sidekickName, String setName) {
-        this.name = name;
-        this.health = health;
-        this.move = move;
-        this.ability = ability;
-        this.attack = attack;
-        this.sidekickName = sidekickName;
-        this.setName = setName;
     }
 }

@@ -1,9 +1,7 @@
 package com.example.courseworkdatabases.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,18 +9,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "set")
 public class Set {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
+    @Id
     @Column(name = "name")
     private String name;
 
     @Column(name = "number_of_heroes")
     private short numberOfHeroes;
-
-    public Set(String name, short numberOfHeroes) {
-        this.name = name;
-        this.numberOfHeroes = numberOfHeroes;
-    }
+    @Column(name = "number_of_maps")
+    private short numberOfMaps;
 }

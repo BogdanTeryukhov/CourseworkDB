@@ -2,34 +2,27 @@ package com.example.courseworkdatabases.controller;
 
 import com.example.courseworkdatabases.entity.Hero;
 import com.example.courseworkdatabases.exception.CantChangeIdException;
-import com.example.courseworkdatabases.repository.reposView.HeroMapViewRepository;
 import com.example.courseworkdatabases.service.HeroService;
-import com.example.courseworkdatabases.entity.view.HeroMapView;
+import com.example.courseworkdatabases.service.SidekickService;
+import com.example.courseworkdatabases.util.CrudMessagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/hero")
 public class HeroController {
     @Autowired
     private HeroService heroService;
-    @Autowired
-    private HeroMapViewRepository heroMapViewRepository;
 
     @GetMapping("/get")
     public List<Hero> heroes(){
         return heroService.findAllHeroes();
     }
 
-    @GetMapping("/map")
-    public List<HeroMapView> heroMapsView(){
-        return heroMapViewRepository.findAll();
-    }
 
     @GetMapping("/health/greater/{health}")
     public List<Hero> heroesHealthGreaterThan(@PathVariable short health){
@@ -83,53 +76,36 @@ public class HeroController {
 
     @GetMapping("/setname/equals/{setName}")
     public List<Hero> heroesSetNameEquals(@PathVariable String setName){
-        return heroService.findAllHeroesBySetName(setName);
+        return heroService.findAllHeroesBySetName(setName).get();
     }
 
     @PostMapping("/add")
     public ResponseEntity<String> addNewHero(@RequestBody Hero hero){
         if (heroService.heroExists(hero.getName())){
             return new ResponseEntity<>(
-                    "Hero is already exists! You can`t make another hero with same name",
+                    CrudMessagesUtil.getCreateErrorString(hero),
                     HttpStatus.BAD_REQUEST
             );
         }
-        hero.setId(heroService.findCorrectHeroId() + 1);
         heroService.saveHero(hero);
-        return new ResponseEntity<>("Hero has been saved", HttpStatus.OK);
+        return new ResponseEntity<>(CrudMessagesUtil.getCreateString(hero), HttpStatus.OK);
     }
 
     @PutMapping("/update/{name}")
-    public String editHero(@PathVariable String name, @RequestBody Hero hero) throws CantChangeIdException {
-        Hero currentHero = heroService.findHeroByName(name).orElseThrow();
-        if (!Objects.equals(currentHero.getId(), hero.getId())){
-            throw new CantChangeIdException("You can`t change the ID");
-        }
-
-        currentHero.setName(currentHero.getName());
-        currentHero.setHealth(hero.getHealth() == 0 ? currentHero.getHealth() : hero.getHealth());
-        currentHero.setMove(hero.getMove() == 0 ? currentHero.getMove() : hero.getMove());
-        currentHero.setAbility(hero.getAbility() == null ? currentHero.getAbility() : hero.getAbility());
-        currentHero.setAttack(hero.getAttack() == null ? currentHero.getAttack() : hero.getAttack());
-        currentHero.setSidekickName(hero.getSidekickName() == null ?
-                currentHero.getSidekickName() : hero.getSidekickName());
-        currentHero.setNumberOfSidekicks(hero.getNumberOfSidekicks() == 0 ?
-                currentHero.getNumberOfSidekicks() : hero.getNumberOfSidekicks());
-        currentHero.setSetName(hero.getSetName() == null ?
-                currentHero.getSetName() : hero.getSetName());
-        heroService.saveHero(currentHero);
-        return "Hero has been edited";
+    public ResponseEntity<String> updateHero(@PathVariable String name, @RequestBody Hero hero) throws CantChangeIdException {
+        heroService.updateHero(name, hero);
+        return new ResponseEntity<>(CrudMessagesUtil.getUpdateString(hero), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<String> deleteHero(@PathVariable String name){
         if (!heroService.heroExists(name)){
             return new ResponseEntity<>(
-                    "Hero is not exists!",
+                    CrudMessagesUtil.getDeleteErrorString(new Hero()),
                     HttpStatus.BAD_REQUEST
             );
         }
         heroService.deleteHeroByName(name);
-        return new ResponseEntity<>("Hero has been deleted", HttpStatus.OK);
+        return new ResponseEntity<>(CrudMessagesUtil.getDeleteString(new Hero()), HttpStatus.OK);
     }
 }
