@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -24,26 +25,106 @@ public class CardServiceImpl implements CardService {
     private HeroCardRepo heroCardRepo;
 
     @Override
+    public Optional<List<Card>> findAllWhereBoostGreaterThan(short boost) {
+        return cardRepo.findCardsWhereBoostGreaterThan(boost);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereBoostLessThan(short boost) {
+        return cardRepo.findCardsWhereBoostLessThan(boost);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereBoostEquals(short boost) {
+        return cardRepo.findCardsWhereBoostEquals(boost);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereValueGreaterThan(short value) {
+        return cardRepo.findCardsWhereValueGreaterThan(value);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereValueLessThan(short value) {
+        return cardRepo.findCardsWhereValueLessThan(value);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereValueEquals(short value) {
+        return cardRepo.findCardsWhereValueEquals(value);
+    }
+
+    @Override
+    public Optional<List<Card>> findCardsByType(String type) {
+        return cardRepo.findCardsByType(type);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllUniqueCards() {
+        return Optional.of(cardRepo.findAll().stream().filter(Card::isUniq).toList());
+    }
+
+    @Override
+    public Optional<List<Card>> findAllWhereEffectExists() {
+        return Optional.of(cardRepo.findAll().stream().filter(card -> card.getEffect() != null).toList());
+    }
+
+    @Override
+    public Optional<List<Card>> findAllByHero(String heroName) {
+        return cardRepo.findAllCardsByHero(heroName);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllBySidekick(String sidekickName) {
+        return cardRepo.findAllCardsBySidekick(sidekickName);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllByHeroCardNumberGreaterThan(String heroName, short numOfCards) {
+        return cardRepo.findAllCardsByHeroGreaterThan(heroName, numOfCards);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllByHeroCardNumberLessThan(String heroName, short numOfCards) {
+        return cardRepo.findAllCardsByHeroLessThan(heroName, numOfCards);
+    }
+
+    @Override
+    public Optional<List<Card>> findAllByHeroCardNumberEquals(String heroName, short numOfCards) {
+        return cardRepo.findAllCardsByHeroEquals(heroName, numOfCards);
+    }
+
+    @Override
     @TransactionTimeManagement()
     public void saveCard(Card card) {
         cardRepo.save(card);
     }
 
     @Override
-    public void setUniqueWhileAdding(Card card) {
-        cardRepo
-                .findAll()
-                .stream()
-                .filter((current) -> Objects.equals(current.getName(), card.getName()))
-                .forEach((current) -> current.setUniq(false));
+    public Card setUniqueWhileAdding(Card currentCard) {
+        List<Card> cardsAlreadyExists = cardRepo.findAll();
+        boolean isIn = false;
+        for (Card card: cardsAlreadyExists) {
+            if (card.getName().equals(currentCard.getName())){
+                isIn = true;
+                card.setUniq(false);
+                cardRepo.save(card);
+            }
+        }
+        if (isIn){
+            currentCard.setUniq(false);
+        }
+        return currentCard;
     }
 
     @Override
     @TransactionTimeManagement()
     public void deleteCard(String name, short boost) {
-        List<HeroCard> heroCards = heroCardRepo.findAllByCardNameAndCardBoost(name, boost);
-        heroCardRepo.deleteAll(heroCards);
-        cardRepo.delete(cardRepo.findCardByNameAndBoost(name, boost));
+        if (cardRepo.findCardByNameAndBoost(name, boost).isPresent()){
+            List<HeroCard> heroCards = heroCardRepo.findAllByCardNameAndCardBoost(name, boost);
+            heroCardRepo.deleteAll(heroCards);
+            cardRepo.delete(cardRepo.findCardByNameAndBoost(name, boost).get());
+        }
     }
 
     @Override

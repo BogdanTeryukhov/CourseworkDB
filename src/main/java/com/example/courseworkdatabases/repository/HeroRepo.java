@@ -13,22 +13,22 @@ import java.util.Optional;
 public interface HeroRepo extends JpaRepository<Hero, String> {
     Optional<Hero> findByName(String name);
     Optional<List<Hero>> findAllBySetName(String setName);
+    Optional<Hero> findHeroBySidekickName(String sidekickName);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.health > ?1", nativeQuery = true)
-    List<Hero> findHeroByHealthGreaterThan(short value);
+    Optional<List<Hero>> findHeroByHealthGreaterThan(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.health < ?1", nativeQuery = true)
-    List<Hero> findHeroByHealthLessThan(short value);
+    Optional<List<Hero>> findHeroByHealthLessThan(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.health = ?1", nativeQuery = true)
-    List<Hero> findHeroByHealthEquals(short value);
+    Optional<List<Hero>> findHeroByHealthEquals(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.attack = ?1", nativeQuery = true)
-    List<Hero> findHeroByAttack(String attack);
+    Optional<List<Hero>> findHeroByAttack(String attack);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.move > ?1", nativeQuery = true)
-    List<Hero> findHeroByMoveGreaterThan(short value);
+    Optional<List<Hero>> findHeroByMoveGreaterThan(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.move < ?1", nativeQuery = true)
-    List<Hero> findHeroByMoveLessThan(short value);
+    Optional<List<Hero>> findHeroByMoveLessThan(short value);
     @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.move = ?1", nativeQuery = true)
-    List<Hero> findHeroByMoveEquals(short value);
-    @Query(value = "SELECT h.* FROM unmatched.Hero h WHERE h.set_name = ?1", nativeQuery = true)
-    List<Hero> findHeroBySetName(String setName);
+    Optional<List<Hero>> findHeroByMoveEquals(short value);
+
     boolean existsByName(String name);
     void deleteByName(String name);
 }

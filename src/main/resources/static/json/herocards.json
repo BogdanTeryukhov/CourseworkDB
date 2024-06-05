@@ -1,16 +1,84 @@
 [
   {
-    "heroName": "Bigfoot",
-    "cardName": "Larger than life",
-    "cardBoost": 3,
-    "cardNumber": 3,
-    "belong": "Hero"
-  },
-  {
-    "heroName": "Bigfoot",
-    "cardName": "It's Just Your Imagination",
-    "cardBoost": 3,
-    "cardNumber": 2,
-    "belong": "Hero"
+    "name": "Bigfoot",
+    "connections:": [
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Larger than life",
+        "cardBoost": 3,
+        "cardNumber": 3,
+        "belong": "Hero"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "It's Just Your Imagination",
+        "cardBoost": 3,
+        "cardNumber": 2,
+        "belong": "Hero"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Hoax",
+        "cardBoost": 2,
+        "cardNumber": 3,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Skirmish",
+        "cardBoost": 1,
+        "cardNumber": 3,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Disengage",
+        "cardBoost": 2,
+        "cardNumber": 2,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Savagery",
+        "cardBoost": 3,
+        "cardNumber": 3,
+        "belong": "Hero"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Momentous shift",
+        "cardBoost": 1,
+        "cardNumber": 3,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Feint",
+        "cardBoost": 2,
+        "cardNumber": 3,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Regroup",
+        "cardBoost": 2,
+        "cardNumber": 3,
+        "belong": "Any"
+      },
+      {
+        "heroName": "Bifgoot",
+        "cardName": "Jackalope horns",
+        "cardBoost": 2,
+        "cardNumber": 3,
+        "belong": "Sidekick"
+      },
+      {
+        "heroName": "Bigfoot",
+        "cardName": "Crash through the trees",
+        "cardBoost": 3,
+        "cardNumber": 2,
+        "belong": "Hero"
+      }
+    ]
   }
 ]

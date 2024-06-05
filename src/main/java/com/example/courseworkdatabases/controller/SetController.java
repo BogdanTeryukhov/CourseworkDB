@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -17,6 +19,36 @@ import java.util.Objects;
 public class SetController {
     @Autowired
     private SetService setService;
+
+    @GetMapping("/heroes/greater/{numberOfHeroes}")
+    public List<Set> setHeroesGreaterThan(@PathVariable short numberOfHeroes){
+        return setService.findAllByNumberOfHeroesGreaterThan(numberOfHeroes).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/heroes/less/{numberOfHeroes}")
+    public List<Set> setHeroesLessThan(@PathVariable short numberOfHeroes){
+        return setService.findAllByNumberOfHeroesLessThan(numberOfHeroes).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/heroes/equals/{numberOfHeroes}")
+    public List<Set> setHeroesEquals(@PathVariable short numberOfHeroes) {
+        return setService.findAllByNumberOfHeroesEquals(numberOfHeroes).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/maps/greater/{numberOfMaps}")
+    public List<Set> setMapsGreaterThan(@PathVariable short numberOfMaps){
+        return setService.findAllByNumberOfMapsGreaterThan(numberOfMaps).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/maps/less/{numberOfMaps}")
+    public List<Set> setMapsLessThan(@PathVariable short numberOfMaps){
+        return setService.findAllByNumberOfMapsLessThan(numberOfMaps).orElse(new ArrayList<>());
+    }
+
+    @GetMapping("/maps/equals/{numberOfMaps}")
+    public List<Set> setMapsEquals(@PathVariable short numberOfMaps) {
+        return setService.findAllByNumberOfMapsEquals(numberOfMaps).orElse(new ArrayList<>());
+    }
 
     @PostMapping("/add")
     public ResponseEntity<String> addSet(@RequestBody Set set) {

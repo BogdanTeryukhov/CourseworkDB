@@ -17,6 +17,85 @@
   },
 
   {
+    "name": "Disengage",
+    "value": 4,
+    "boost": 2,
+    "effect": "After combat: Choose an empty space in this fighter's zone. Place this fighter in that space.",
+    "uniq": false,
+    "type": "Attack"
+  },
+
+  {
+    "name": "Savagery",
+    "value": 4,
+    "boost": 3,
+    "effect": "After combat: If you won the combat, deal 1 damage to each fighter adjacent to Bigfoot.",
+    "uniq": true,
+    "type": "Attack"
+  },
+
+  {
+    "name": "Hoax",
+    "value": 4,
+    "boost": 2,
+    "effect": "After combat: Move your fighter up to 5 spaces. You may move that fighter through spaces containing opposing fighters.",
+    "uniq": true,
+    "type": "Versatile"
+  },
+
+  {
+    "name": "Jackalope Horns",
+    "boost": 2,
+    "effect": "Move the Jackalope up to 5 spaces. You may move the Jackalope through spaces containing opposing fighters. Then deal 2 damage to any one fighter adjacent to the Jackalope.",
+    "uniq": true,
+    "type": "Scheme"
+  },
+
+  {
+    "name": "Crash through the trees",
+    "boost": 3,
+    "effect": "Move Bigfoot up to 5 spaces. You may move Bigfoot through spaces containing opposing fighters.",
+    "uniq": true,
+    "type": "Scheme"
+  },
+
+  {
+    "name": "Skirmish",
+    "value": 4,
+    "boost": 1,
+    "effect": "After combat: If you won the combat, choose one of the fighters in the combat and move them up to 2 spaces.",
+    "uniq": false,
+    "type": "Versatile"
+  },
+
+  {
+    "name": "Momentous shift",
+    "value": 3,
+    "boost": 1,
+    "effect": "During combat: If your fighter started this turn in a different space, this card's value is 5 instead.",
+    "uniq": false,
+    "type": "Versatile"
+  },
+
+  {
+    "name": "Feint",
+    "value": 2,
+    "boost": 2,
+    "effect": "Immediately: Cancel all effects on your opponent's card.",
+    "uniq": false,
+    "type": "Versatile"
+  },
+
+  {
+    "name": "Reqroup",
+    "value": 1,
+    "boost": 2,
+    "effect": "After combat: Draw 1 card. If you won the combat, draw 2 cards instead.",
+    "uniq": false,
+    "type": "Versatile"
+  },
+
+  {
     "name": "Wily fighting",
     "value": 3,
     "boost": 1,

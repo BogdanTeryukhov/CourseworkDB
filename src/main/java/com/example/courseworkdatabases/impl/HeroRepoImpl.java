@@ -28,18 +28,10 @@ public class HeroRepoImpl implements HeroService {
     private SidekickRepo sidekickRepo;
     @Autowired
     private HeroCardRepo heroCardRepo;
-
     @Override
-    public Optional<Hero> findHeroByName(String name) {
-        return heroRepo.findByName(name);
+    public Optional<List<Hero>> findAllHeroes() {
+        return Optional.of(heroRepo.findAll());
     }
-
-    @Override
-    public List<Hero> findAllHeroes() {
-        return heroRepo.findAll();
-    }
-
-
     @Override
     @TransactionTimeManagement()
     public void saveHero(Hero hero) {
@@ -68,61 +60,66 @@ public class HeroRepoImpl implements HeroService {
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereHealthGreaterThanValue(short value) {
+    public Optional<List<Hero>> findAllHeroesWhereHealthGreaterThanValue(short value) {
         return heroRepo.findHeroByHealthGreaterThan(value);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereHealthLessThanValue(short value) {
+    public Optional<List<Hero>> findAllHeroesWhereHealthLessThanValue(short value) {
         return heroRepo.findHeroByHealthLessThan(value);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereHealthEqualsValue(short value) {
+    public Optional<List<Hero>> findAllHeroesWhereHealthEqualsValue(short value) {
         return heroRepo.findHeroByHealthEquals(value);
     }
 
     @Override
-    public List<Hero> findAllHeroesByAttack(String attack) {
+    public Optional<List<Hero>> findAllHeroesByAttack(String attack) {
         return heroRepo.findHeroByAttack(attack);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereMoveGreaterThanValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereMoveGreaterThanValue(short move) {
         return heroRepo.findHeroByMoveGreaterThan(move);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereMoveLessThanValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereMoveLessThanValue(short move) {
         return heroRepo.findHeroByMoveLessThan(move);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereMoveEqualsValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereMoveEqualsValue(short move) {
         return heroRepo.findHeroByMoveEquals(move);
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short move) {
         List<String> sidekicks = sidekickRepo.findAll().stream().filter(sidekick -> sidekick.getNumberOfSidekicks() > move).map(sidekick -> sidekick.getName()).toList();
-        return heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList();
+        return Optional.of(heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList());
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move) {
         List<String> sidekicks = sidekickRepo.findAll().stream().filter(sidekick -> sidekick.getNumberOfSidekicks() < move).map(sidekick -> sidekick.getName()).toList();
-        return heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList();
+        return Optional.of(heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList());
     }
 
     @Override
-    public List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move) {
+    public Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move) {
         List<String> sidekicks = sidekickRepo.findAll().stream().filter(sidekick -> sidekick.getNumberOfSidekicks() == move).map(sidekick -> sidekick.getName()).toList();
-        return heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList();
+        return Optional.of(heroRepo.findAll().stream().filter(hero -> sidekicks.contains(hero.getSidekickName())).toList());
     }
 
     @Override
     public Optional<List<Hero>> findAllHeroesBySetName(String setName) {
         return heroRepo.findAllBySetName(setName);
+    }
+
+    @Override
+    public Optional<Hero> findBySidekickName(String sidekickName) {
+        return heroRepo.findHeroBySidekickName(sidekickName);
     }
 
     @Override

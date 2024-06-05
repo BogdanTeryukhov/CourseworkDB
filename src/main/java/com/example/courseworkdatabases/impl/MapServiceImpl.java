@@ -38,19 +38,23 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public List<Map> findAllMaps() {
-        return mapRepo.findAll();
+    public Optional<List<Map>> findAllWhereNumOfPosGreaterThan(short numOfPos) {
+        return mapRepo.findMapWhereNumOfPosGreaterThan(numOfPos);
+    }
+
+    @Override
+    public Optional<List<Map>> findAllWhereNumOfPosLessThan(short numOfPos) {
+        return mapRepo.findMapWhereNumOfPosLessThan(numOfPos);
+    }
+
+    @Override
+    public Optional<List<Map>> findAllWhereNumOfPosEquals(short numOfPos) {
+        return mapRepo.findMapWhereNumOfPosEquals(numOfPos);
     }
 
     @Override
     public boolean mapExists(String name) {
         return mapRepo.existsByName(name);
-    }
-
-    @Override
-    @TransactionTimeManagement()
-    public void deleteMap(String name) {
-        mapRepo.deleteByName(name);
     }
 
     @Override
