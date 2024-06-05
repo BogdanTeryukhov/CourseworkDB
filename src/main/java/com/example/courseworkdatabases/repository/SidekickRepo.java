@@ -12,21 +12,20 @@ import java.util.Optional;
 @Repository
 public interface SidekickRepo extends JpaRepository<Sidekick, String> {
     Optional<Sidekick> findSidekickByName(String name);
-
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.health > ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByHealthGreaterThan(short value);
+    Optional<List<Sidekick>> findSidekickByHealthGreaterThan(short value);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.health < ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByHealthLessThan(short value);
+    Optional<List<Sidekick>> findSidekickByHealthLessThan(short value);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.health = ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByHealthEquals(short value);
+    Optional<List<Sidekick>> findSidekickByHealthEquals(short value);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.attack = ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByAttack(String attack);
+    Optional<List<Sidekick>> findSidekickByAttack(String attack);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.move > ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByMoveGreaterThan(short value);
+    Optional<List<Sidekick>> findSidekickByMoveGreaterThan(short value);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.move < ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByMoveLessThan(short value);
+    Optional<List<Sidekick>> findSidekickByMoveLessThan(short value);
     @Query(value = "SELECT s.* FROM unmatched.Sidekick s WHERE s.move = ?1", nativeQuery = true)
-    List<Sidekick> findSidekickByMoveEquals(short value);
+    Optional<List<Sidekick>> findSidekickByMoveEquals(short value);
     boolean existsByName(String name);
     void deleteByName(String name);
 }

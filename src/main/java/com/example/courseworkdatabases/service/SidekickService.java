@@ -9,17 +9,15 @@ import java.util.Optional;
 
 @Component
 public interface SidekickService {
-    List<Sidekick> findAllSidekicks();
+    Optional<Sidekick> findSidekick(String name);
+    Optional<List<Sidekick>> findAllSidekicksWhereHealthGreaterThanValue(short value);
+    Optional<List<Sidekick>> findAllSidekicksWhereHealthLessThanValue(short value);
+    Optional<List<Sidekick>> findAllSidekicksWhereHealthEqualsValue(short value);
+    Optional<List<Sidekick>> findAllSidekicksByAttack(String attack);
+    Optional<List<Sidekick>> findAllSidekicksWhereMoveGreaterThanValue(short move);
+    Optional<List<Sidekick>> findAllSidekicksWhereMoveLessThanValue(short move);
+    Optional<List<Sidekick>> findAllSidekicksWhereMoveEqualsValue(short move);
     void saveSidekick(Sidekick sidekick);
-
-    List<Sidekick> findAllSidekicksWhereHealthGreaterThanValue(short value);
-    List<Sidekick> findAllSidekicksWhereHealthLessThanValue(short value);
-    List<Sidekick> findAllSidekicksWhereHealthEqualsValue(short value);
-    List<Sidekick> findAllSidekicksByAttack(String attack);
-    List<Sidekick> findAllSidekicksWhereMoveGreaterThanValue(short move);
-    List<Sidekick> findAllSidekicksWhereMoveLessThanValue(short move);
-    List<Sidekick> findAllSidekicksWhereMoveEqualsValue(short move);
     void deleteSidekick(String name);
     boolean sidekickExists(String name);
-    Optional<Sidekick> findSidekick(String name);
 }

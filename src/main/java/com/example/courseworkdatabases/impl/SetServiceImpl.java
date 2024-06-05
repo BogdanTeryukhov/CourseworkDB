@@ -4,8 +4,6 @@ import com.example.courseworkdatabases.annotations.TransactionTimeManagement;
 import com.example.courseworkdatabases.entity.Hero;
 import com.example.courseworkdatabases.entity.Map;
 import com.example.courseworkdatabases.entity.Set;
-import com.example.courseworkdatabases.exception.CantChangeIdException;
-import com.example.courseworkdatabases.repository.MapRepo;
 import com.example.courseworkdatabases.repository.SetRepo;
 import com.example.courseworkdatabases.service.HeroService;
 import com.example.courseworkdatabases.service.MapService;
@@ -13,12 +11,9 @@ import com.example.courseworkdatabases.service.SetService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,6 +24,36 @@ public class SetServiceImpl implements SetService {
     private HeroService heroService;
     @Autowired
     private MapService mapService;
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfHeroesGreaterThan(short numberOfHeroes) {
+        return setRepo.findSetsByNumberOfHeroesGreaterThan(numberOfHeroes);
+    }
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfHeroesLessThan(short numberOfHeroes) {
+        return setRepo.findSetsByNumberOfHeroesLessThan(numberOfHeroes);
+    }
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfHeroesEquals(short numberOfHeroes) {
+        return setRepo.findSetsByNumberOfHeroesEquals(numberOfHeroes);
+    }
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfMapsGreaterThan(short numberOfMaps) {
+        return setRepo.findSetsByNumberOfMapsGreaterThan(numberOfMaps);
+    }
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfMapsLessThan(short numberOfMaps) {
+        return setRepo.findSetsByNumberOfMapsLessThan(numberOfMaps);
+    }
+
+    @Override
+    public Optional<List<Set>> findAllByNumberOfMapsEquals(short numberOfMaps) {
+        return setRepo.findSetsByNumberOfMapsEquals(numberOfMaps);
+    }
 
     @Override
     @TransactionTimeManagement()
@@ -61,19 +86,10 @@ public class SetServiceImpl implements SetService {
         return mapService.findAllMapsBySetName(setName);
     }
 
-    @Override
-    public List<Set> findAllSets() {
-        return setRepo.findAll();
-    }
 
     @Override
     public boolean setExists(String name) {
         return setRepo.existsByName(name);
     }
 
-    @Override
-    @TransactionTimeManagement()
-    public void deleteSet(String name) {
-        setRepo.deleteByName(name);
-    }
 }

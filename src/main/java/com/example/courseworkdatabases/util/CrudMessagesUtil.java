@@ -1,10 +1,16 @@
 package com.example.courseworkdatabases.util;
 
 
+import java.util.List;
+
 public class CrudMessagesUtil {
 
     public static String getCreateString(Object object){
         return object.getClass().getSimpleName() + " has been saved";
+    }
+
+    public static String getCreateString(List<Object> objects){
+        return objects.get(0).getClass().getSimpleName() + "s has been saved";
     }
 
     public static String getUpdateString(Object object){

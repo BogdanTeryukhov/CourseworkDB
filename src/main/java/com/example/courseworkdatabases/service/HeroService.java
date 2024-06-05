@@ -14,20 +14,20 @@ import java.util.Optional;
 
 @Component
 public interface HeroService {
-    Optional<Hero> findHeroByName(String name);
-    List<Hero> findAllHeroes();
-    void saveHero(Hero hero);
-    List<Hero> findAllHeroesWhereHealthGreaterThanValue(short value);
-    List<Hero> findAllHeroesWhereHealthLessThanValue(short value);
-    List<Hero> findAllHeroesWhereHealthEqualsValue(short value);
-    List<Hero> findAllHeroesByAttack(String attack);
-    List<Hero> findAllHeroesWhereMoveGreaterThanValue(short move);
-    List<Hero> findAllHeroesWhereMoveLessThanValue(short move);
-    List<Hero> findAllHeroesWhereMoveEqualsValue(short move);
-    List<Hero> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short move);
-    List<Hero> findAllHeroesWhereNumberOfSidekicksLessThanValue(short move);
-    List<Hero> findAllHeroesWhereNumberOfSidekicksEqualsValue(short move);
+    Optional<List<Hero>> findAllHeroes();
+    Optional<List<Hero>> findAllHeroesWhereHealthGreaterThanValue(short value);
+    Optional<List<Hero>> findAllHeroesWhereHealthLessThanValue(short value);
+    Optional<List<Hero>> findAllHeroesWhereHealthEqualsValue(short value);
+    Optional<List<Hero>> findAllHeroesByAttack(String attack);
+    Optional<List<Hero>> findAllHeroesWhereMoveGreaterThanValue(short move);
+    Optional<List<Hero>> findAllHeroesWhereMoveLessThanValue(short move);
+    Optional<List<Hero>> findAllHeroesWhereMoveEqualsValue(short move);
+    Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksGreaterThanValue(short numberOfSidekicks);
+    Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksLessThanValue(short numberOfSidekicks);
+    Optional<List<Hero>> findAllHeroesWhereNumberOfSidekicksEqualsValue(short numberOfSidekicks);
     Optional<List<Hero>> findAllHeroesBySetName(String setName);
+    Optional<Hero> findBySidekickName(String sidekickName);
+    void saveHero(Hero hero);
     boolean heroExists(String name);
     void updateHero(String prevName, Hero hero) throws CantChangeIdException;
     void deleteHeroByName(String name);

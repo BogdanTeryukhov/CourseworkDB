@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,37 +38,37 @@ public class SidekickController {
 
     @GetMapping("/health/greater/{health}")
     public List<Sidekick> heroesHealthGreaterThan(@PathVariable short health){
-        return sidekickService.findAllSidekicksWhereHealthGreaterThanValue(health);
+        return sidekickService.findAllSidekicksWhereHealthGreaterThanValue(health).orElse(new ArrayList<>());
     }
 
     @GetMapping("/health/less/{health}")
     public List<Sidekick> heroesHealthLessThan(@PathVariable short health){
-        return sidekickService.findAllSidekicksWhereHealthLessThanValue(health);
+        return sidekickService.findAllSidekicksWhereHealthLessThanValue(health).orElse(new ArrayList<>());
     }
 
     @GetMapping("/health/equals/{health}")
     public List<Sidekick> heroesHealthEquals(@PathVariable short health){
-        return sidekickService.findAllSidekicksWhereHealthEqualsValue(health);
+        return sidekickService.findAllSidekicksWhereHealthEqualsValue(health).orElse(new ArrayList<>());
     }
 
     @GetMapping("/attack/equals/{attack}")
     public List<Sidekick> heroesAttackEquals(@PathVariable String attack){
-        return sidekickService.findAllSidekicksByAttack(attack);
+        return sidekickService.findAllSidekicksByAttack(attack).orElse(new ArrayList<>());
     }
 
     @GetMapping("/move/greater/{move}")
     public List<Sidekick> heroesMoveGreaterThan(@PathVariable short move){
-        return sidekickService.findAllSidekicksWhereMoveGreaterThanValue(move);
+        return sidekickService.findAllSidekicksWhereMoveGreaterThanValue(move).orElse(new ArrayList<>());
     }
 
     @GetMapping("/move/less/{move}")
     public List<Sidekick> heroesMoveLessThan(@PathVariable short move){
-        return sidekickService.findAllSidekicksWhereMoveLessThanValue(move);
+        return sidekickService.findAllSidekicksWhereMoveLessThanValue(move).orElse(new ArrayList<>());
     }
 
     @GetMapping("/move/equals/{move}")
     public List<Sidekick> heroesMoveEquals(@PathVariable short move){
-        return sidekickService.findAllSidekicksWhereMoveEqualsValue(move);
+        return sidekickService.findAllSidekicksWhereMoveEqualsValue(move).orElse(new ArrayList<>());
     }
 
 
